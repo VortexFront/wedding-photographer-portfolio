@@ -5,8 +5,44 @@
     <link rel="icon" type="image/svg+xml" href="/wedding-photographer-portfolio/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Elena Art | Свадебный фотограф</title>
-    <script type="module" crossorigin src="/wedding-photographer-portfolio/assets/index-BACN9eKy.js"></script>
-    <link rel="stylesheet" crossorigin href="/wedding-photographer-portfolio/assets/index-BpP9RhB0.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          container: {
+            center: true,
+            padding: '2rem',
+          },
+          extend: {
+            colors: {
+              'text-main': '#1a1a1a',
+              'text-secondary': '#4a4a4a',
+              'muted': '#9ca3af',
+              'accent': '#d4b08c',
+              'bg-primary': '#ffffff',
+              'bg-secondary': '#f9fafb',
+            },
+            fontFamily: {
+              serif: ['Playfair Display', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .glass {
+          @apply bg-white/10 backdrop-blur-md border border-white/20;
+        }
+        .section-padding {
+          @apply py-20 lg:py-32;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/wedding-photographer-portfolio/assets/index-C4RbZOYE.js"></script>
+    <link rel="stylesheet" crossorigin href="/wedding-photographer-portfolio/assets/index-tn0RQdqM.css">
   </head>
   <body>
     <div id="root"></div>
