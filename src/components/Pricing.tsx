@@ -1,11 +1,15 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 
-const Pricing = () => {
+interface PricingProps {
+  onSelectPlan: (plan: string) => void;
+}
+
+const Pricing = ({ onSelectPlan }: PricingProps) => {
   const plans = [
     {
       name: 'Essential',
-      price: '50,000₽',
+      price: '50,000₸',
       description: 'Идеально для небольших камерных свадеб',
       features: [
         '6 часов съемки',
@@ -16,7 +20,7 @@ const Pricing = () => {
     },
     {
       name: 'Premium',
-      price: '85,000₽',
+      price: '85,000₸',
       description: 'Самый популярный выбор для полного дня',
       features: [
         '10 часов съемки',
@@ -29,7 +33,7 @@ const Pricing = () => {
     },
     {
       name: 'Deluxe',
-      price: '120,000₽',
+      price: '120,000₸',
       description: 'Максимальный комфорт и внимание к деталям',
       features: [
         'Весь свадебный день (до 14 часов)',
@@ -97,7 +101,10 @@ const Pricing = () => {
                 ))}
               </ul>
               
-              <button className="w-full py-4 border border-text-main text-xs uppercase tracking-widest font-semibold hover:bg-text-main hover:text-white transition-all duration-300">
+              <button 
+                onClick={() => onSelectPlan(plan.name)}
+                className="w-full py-4 border border-text-main text-xs uppercase tracking-widest font-semibold hover:bg-text-main hover:text-white transition-all duration-300"
+              >
                 Забронировать дату
               </button>
             </motion.div>

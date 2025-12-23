@@ -1,14 +1,24 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Portfolio from './components/Portfolio';
 import Pricing from './components/Pricing';
 import Footer from './components/Footer';
+import BookingModal from './components/BookingModal';
 
 function App() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<string | undefined>(undefined);
+
+  const openBooking = (plan?: string) => {
+    setSelectedPlan(plan);
+    setIsBookingOpen(true);
+  };
+
   return (
     <main className="relative">
-      <Header />
+      <Header onOpenBooking={() => openBooking()} />
       
       <Hero />
 
@@ -72,7 +82,7 @@ function App() {
 
       <Portfolio />
       
-      <Pricing />
+      <Pricing onSelectPlan={openBooking} />
 
       {/* CTA Section */}
       <section className="section-padding bg-text-main text-white overflow-hidden relative">
@@ -92,17 +102,23 @@ function App() {
           >
             <h2 className="text-4xl md:text-6xl text-white mb-10">Ваш Самый Важный День <br /> Начинается Здесь</h2>
             <p className="text-white/60 mb-12 max-w-2xl mx-auto uppercase tracking-widest text-xs">узнайте, свободна ли ваша дата</p>
-            <a 
-              href="#contact" 
+            <button 
+              onClick={() => openBooking()}
               className="inline-block px-12 py-5 bg-white text-text-main uppercase tracking-widest text-xs font-bold hover:bg-accent transition-colors"
             >
               Связаться со мной
-            </a>
+            </button>
           </motion.div>
         </div>
       </section>
 
       <Footer />
+
+      <BookingModal 
+        isOpen={isBookingOpen} 
+        onClose={() => setIsBookingOpen(false)} 
+        planName={selectedPlan}
+      />
     </main>
   );
 }

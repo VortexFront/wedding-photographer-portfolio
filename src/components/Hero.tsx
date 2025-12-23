@@ -7,7 +7,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10000ms] ease-linear"
         style={{ 
-          backgroundImage: `url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=2000')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=90&w=2000')`,
           transform: 'scale(1.1)' 
         }}
       />
@@ -22,12 +22,12 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="text-white/80 uppercase tracking-[0.3em] text-sm mb-6 block font-light">
+          <span className="text-white/80 uppercase tracking-[0.3em] text-[10px] md:text-sm mb-6 block font-light">
             Профессиональный свадебный фотограф
           </span>
-          <h1 className="text-6xl md:text-8xl text-white mb-8">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl text-white mb-8 leading-tight">
             Сохраняя Ваши <br /> 
-            <span className="italic">Искренние</span> Моменты
+            <span className="italic font-serif">Искренние</span> Моменты
           </h1>
           
           <motion.div
@@ -37,7 +37,7 @@ const Hero = () => {
           >
             <a 
               href="#portfolio"
-              className="inline-block px-10 py-4 bg-white text-main uppercase tracking-widest text-xs font-semibold hover:bg-transparent hover:text-white border border-white transition-all duration-300"
+              className="inline-block px-8 py-3 md:px-10 md:py-4 bg-white text-text-main uppercase tracking-widest text-[10px] md:text-xs font-bold hover:bg-transparent hover:text-white border border-white transition-all duration-300"
             >
               Смотреть портфолио
             </a>
@@ -50,7 +50,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 hidden md:flex"
       >
         <div className="w-[1px] h-20 bg-gradient-to-b from-white to-transparent" />
       </motion.div>
