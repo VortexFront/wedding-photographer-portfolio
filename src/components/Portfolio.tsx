@@ -46,7 +46,7 @@ const Portfolio = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="uppercase tracking-[0.2em] text-xs text-muted mb-4 block">Портфолио</span>
-            <h2 className="text-4xl md:text-5xl">Избранные Истории Любви</h2>
+            <h2 className="text-4xl md:text-5xl">Избранные истории любви</h2>
           </motion.div>
           
           <motion.p 

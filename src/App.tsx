@@ -100,7 +100,7 @@ function App() {
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
-            <h2 className="text-4xl md:text-6xl text-white mb-10">Ваш Самый Важный День <br /> Начинается Здесь</h2>
+            <h2 className="text-4xl md:text-6xl text-white mb-10">Ваш самый важный день <br /> Начинается здесь</h2>
             <p className="text-white/60 mb-12 max-w-2xl mx-auto uppercase tracking-widest text-xs">узнайте, свободна ли ваша дата</p>
             <button 
               onClick={() => openBooking()}
