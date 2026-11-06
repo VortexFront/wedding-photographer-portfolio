@@ -56,7 +56,9 @@ const Header = ({ onOpenBooking }: HeaderProps) => {
           animate={{ opacity: 1, x: 0 }}
           className="text-xl md:text-2xl font-serif tracking-[0.2em] uppercase cursor-pointer whitespace-nowrap z-[70] relative"
           style={{ color: (isMobileMenuOpen || isScrolled) ? 'var(--text-main)' : '#ffffff' }}
+          role="link" tabIndex={0} aria-label="Elena Art — на главную"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onKeyDown={(event) => { if (event.key === 'Enter') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
         >
           Elena <span className="font-light italic lowercase">Art</span>
         </motion.div>
@@ -84,10 +86,10 @@ const Header = ({ onOpenBooking }: HeaderProps) => {
 
           <div className="flex items-center gap-6 border-l border-white/20 pl-8" style={{ borderColor: isScrolled ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.2)' }}>
             <div className="flex gap-4">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className={`transition-colors hover:scale-110 ${isScrolled ? 'text-text-main' : 'text-white'}`}>
+              <a href="https://instagram.com" aria-label="Instagram — внешний сайт, не профиль фотографа" target="_blank" rel="noreferrer" className={`transition-colors hover:scale-110 ${isScrolled ? 'text-text-main' : 'text-white'}`}>
                 <Instagram size={18} />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className={`transition-colors hover:scale-110 ${isScrolled ? 'text-text-main' : 'text-white'}`}>
+              <a href="https://facebook.com" aria-label="Facebook — внешний сайт, не профиль фотографа" target="_blank" rel="noreferrer" className={`transition-colors hover:scale-110 ${isScrolled ? 'text-text-main' : 'text-white'}`}>
                 <Facebook size={18} />
               </a>
             </div>
@@ -112,7 +114,8 @@ const Header = ({ onOpenBooking }: HeaderProps) => {
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="flex flex-col justify-center items-center gap-[6px] w-12 h-12 p-2"
-            aria-label="Toggle Menu"
+            aria-label={isMobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-expanded={isMobileMenuOpen}
           >
             <motion.span 
               variants={variants.top}
@@ -170,10 +173,10 @@ const Header = ({ onOpenBooking }: HeaderProps) => {
               transition={{ delay: 0.5 }}
               className="mt-12 flex justify-center gap-8"
             >
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-text-main p-3 border border-bg-secondary rounded-full">
+              <a href="https://instagram.com" aria-label="Instagram — внешний сайт, не профиль фотографа" target="_blank" rel="noreferrer" className="text-text-main p-3 border border-bg-secondary rounded-full">
                 <Instagram size={24} />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-text-main p-3 border border-bg-secondary rounded-full">
+              <a href="https://facebook.com" aria-label="Facebook — внешний сайт, не профиль фотографа" target="_blank" rel="noreferrer" className="text-text-main p-3 border border-bg-secondary rounded-full">
                 <Facebook size={24} />
               </a>
             </motion.div>

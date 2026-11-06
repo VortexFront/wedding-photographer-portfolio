@@ -55,7 +55,7 @@ const Pricing = ({ onSelectPlan }: PricingProps) => {
             viewport={{ once: true }}
             className="uppercase tracking-[0.2em] text-xs text-muted mb-4 block"
           >
-            Стоимость услуг
+            Демонстрационные пакеты · цены вымышлены
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -105,7 +105,7 @@ const Pricing = ({ onSelectPlan }: PricingProps) => {
                 onClick={() => onSelectPlan(plan.name)}
                 className="w-full py-4 border border-text-main text-xs uppercase tracking-widest font-semibold hover:bg-text-main hover:text-white transition-all duration-300"
               >
-                Забронировать дату
+                Выбрать пакет
               </button>
             </motion.div>
           ))}

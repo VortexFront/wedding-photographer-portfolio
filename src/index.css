@@ -16,3 +16,9 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
 }
+
+:root { --text-main: #1a1a1a; }
+:focus-visible { outline: 3px solid #7a522e; outline-offset: 4px; }
+.booking-dialog { border: 0; padding: 0; max-height: calc(100dvh - 2rem); overflow-y: auto; }
+.booking-dialog::backdrop { background: rgb(0 0 0 / 0.6); backdrop-filter: blur(4px); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

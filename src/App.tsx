@@ -36,10 +36,11 @@ function App() {
               <div className="aspect-[4/5] overflow-hidden">
                 <img 
                   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1000" 
-                  alt="Photographer" 
+                  alt="Иллюстративный портрет из Unsplash; не автор проекта"
                   className="w-full h-full object-cover"
                 />
               </div>
+              <p className="mt-3 text-xs text-text-secondary">Иллюстрация Unsplash. На фото не автор проекта.</p>
               <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-accent/20 -z-10" />
             </motion.div>
 
@@ -49,30 +50,30 @@ function App() {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="uppercase tracking-[0.2em] text-xs text-muted mb-6 block font-medium">Обо мне</span>
+              <span className="uppercase tracking-[0.2em] text-xs text-muted mb-6 block font-medium">О вымышленном персонаже</span>
               <h2 className="text-4xl md:text-5xl mb-10 leading-tight">
-                Привет, я Елена. <br />
-                Я вижу красоту в простых вещах.
+                Елена — персонаж <br />
+                демонстрационного сайта.
               </h2>
               <div className="space-y-6 text-muted max-w-lg">
                 <p>
-                  Уже более 8 лет я занимаюсь свадебной фотографией. Для меня это не просто работа, 
-                  а возможность сохранить самые важные мгновения вашей жизни, чтобы вы могли возвращаться к ним снова и снова.
+                  Этот учебный проект показывает интерфейс портфолио свадебного фотографа:
+                  галерею, пакеты съёмки и демонстрацию выбора пакета.
                 </p>
                 <p>
-                  Я предпочитаю естественный свет, искренние эмоции и минимальное вмешательство в процесс. 
-                  Моя цель — чтобы на снимках вы видели себя настоящими.
+                  Фотографии используются как иллюстрации из Unsplash. Они не являются
+                  работами разработчика и не изображают его клиентов. Услуги на этом сайте не оказываются.
                 </p>
               </div>
               
               <div className="mt-12 flex items-center gap-10">
                 <div>
-                  <div className="text-3xl font-serif">200+</div>
-                  <div className="text-[10px] uppercase tracking-widest text-muted mt-1">Проведенных свадеб</div>
+                  <div className="text-3xl font-serif">UI demo</div>
+                  <div className="text-[10px] uppercase tracking-widest text-muted mt-1">Учебное портфолио</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-serif">8 лет</div>
-                  <div className="text-[10px] uppercase tracking-widest text-muted mt-1">В индустрии</div>
+                  <div className="text-3xl font-serif">Без сервера</div>
+                  <div className="text-[10px] uppercase tracking-widest text-muted mt-1">Без реальных заявок</div>
                 </div>
               </div>
             </motion.div>
@@ -100,13 +101,13 @@ function App() {
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
-            <h2 className="text-4xl md:text-6xl text-white mb-10">Ваш самый важный день <br /> Начинается здесь</h2>
-            <p className="text-white/60 mb-12 max-w-2xl mx-auto uppercase tracking-widest text-xs">узнайте, свободна ли ваша дата</p>
+            <h2 className="text-4xl md:text-6xl text-white mb-10">Посмотрите пример <br /> выбора пакета</h2>
+            <p className="text-white/60 mb-12 max-w-2xl mx-auto uppercase tracking-widest text-xs">Демо не проверяет доступность дат и не отправляет сообщения</p>
             <button 
               onClick={() => openBooking()}
               className="inline-block px-12 py-5 bg-white text-text-main uppercase tracking-widest text-xs font-bold hover:bg-accent transition-colors"
             >
-              Связаться со мной
+              Открыть демо-бронирование
             </button>
           </motion.div>
         </div>

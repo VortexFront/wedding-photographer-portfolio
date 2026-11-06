@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle } from 'lucide-react';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { CheckCircle, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -8,132 +8,95 @@ interface BookingModalProps {
   planName?: string;
 }
 
-const BookingModal = ({ isOpen, onClose, planName }: BookingModalProps) => {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+// Mount a fresh dialog on each opening: no previous review or form state survives.
+function BookingDialog({ onClose, planName }: Omit<BookingModalProps, 'isOpen'>) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const heading = useRef<HTMLHeadingElement>(null);
+  const [plan, setPlan] = useState(planName ?? 'Essential');
+  const [reviewed, setReviewed] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSubmitted(true);
-      setTimeout(() => {
-        onClose();
-        setIsSubmitted(false);
-      }, 4000);
-    }, 1500);
-  };
+  useEffect(() => {
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const element = dialog.current;
+    const previousOverflow = document.body.style.overflow;
+    element?.showModal();
+    heading.current?.focus();
+    document.body.style.overflow = 'hidden';
+    return () => {
+      element?.close();
+      document.body.style.overflow = previousOverflow;
+      if (opener?.isConnected) opener.focus();
+    };
+  }, []);
+
+  useEffect(() => { heading.current?.focus(); }, [reviewed]);
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          />
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg bg-white shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-8 md:p-12 relative">
-              <button 
-                onClick={onClose}
-                className="absolute top-6 right-6 text-muted hover:text-text-main transition-colors p-2"
-              >
-                <X size={20} />
-              </button>
-
-              {!isSubmitted ? (
-                <>
-                  <div className="mb-10 text-center">
-                    <h3 className="text-3xl font-serif mb-3">Забронировать дату</h3>
-                    <p className="text-muted text-xs uppercase tracking-widest font-medium">
-                      {planName ? `Выбран пакет: ${planName}` : 'Обсудим вашу историю?'}
-                    </p>
-                  </div>
-
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                    <div className="group">
-                      <label className="text-[10px] uppercase tracking-widest font-bold text-muted mb-2 block group-focus-within:text-accent transition-colors">Ваше имя</label>
-                      <input 
-                        required
-                        type="text" 
-                        className="w-full border-b border-bg-secondary py-2 text-text-main focus:border-accent outline-none transition-colors bg-transparent placeholder:text-muted/50"
-                        placeholder="Имя Фамилия"
-                      />
-                    </div>
-                    
-                    <div className="group">
-                      <label className="text-[10px] uppercase tracking-widest font-bold text-muted mb-2 block group-focus-within:text-accent transition-colors">Телефон</label>
-                      <input 
-                        required
-                        type="tel" 
-                        className="w-full border-b border-bg-secondary py-2 text-text-main focus:border-accent outline-none transition-colors bg-transparent placeholder:text-muted/50"
-                        placeholder="+7 (999) 000-00-00"
-                      />
-                    </div>
-
-                    <div className="group">
-                      <label className="text-[10px] uppercase tracking-widest font-bold text-muted mb-2 block group-focus-within:text-accent transition-colors">Дата события</label>
-                      <input 
-                        required
-                        type="date" 
-                        className="w-full border-b border-bg-secondary py-2 text-text-main focus:border-accent outline-none transition-colors bg-transparent"
-                      />
-                    </div>
-
-                    <div className="mt-8">
-                      <button 
-                        type="submit"
-                        disabled={isLoading}
-                        className="w-full py-5 bg-text-main text-white uppercase tracking-[0.2em] text-xs font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-70"
-                      >
-                        {isLoading ? (
-                          <span>Отправка...</span>
-                        ) : (
-                          <>
-                            <span>Отправить заявку</span>
-                            <Send size={14} />
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </form>
-                </>
-              ) : (
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="py-12 text-center flex flex-col items-center"
-                >
-                  <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle size={32} className="text-green-600" />
-                  </div>
-                  <h3 className="text-2xl font-serif mb-4">Заявка отправлена!</h3>
-                  <p className="text-muted text-sm max-w-xs mx-auto leading-relaxed">
-                    Спасибо за доверие. Я свяжусь с вами в ближайшее время для подтверждения деталей.
-                  </p>
-                </motion.div>
-              )}
+    <dialog
+      ref={dialog}
+      aria-labelledby="booking-title"
+      aria-describedby="booking-description"
+      className="booking-dialog w-full max-w-lg bg-white shadow-2xl"
+      onCancel={(event) => { event.preventDefault(); onClose(); }}
+      onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
+      onKeyDown={(event) => {
+        if (event.key !== 'Tab') return;
+        const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex="0"]',
+        )).filter((control) => control.getClientRects().length > 0);
+        const first = controls[0], last = controls[controls.length - 1];
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === heading.current)) {
+          event.preventDefault(); last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault(); first?.focus();
+        }
+      }}
+    >
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="relative p-7 md:p-12">
+        <button type="button" onClick={onClose} aria-label="Закрыть демо-бронирование" className="absolute top-3 right-3 p-3 text-text-secondary hover:text-text-main">
+          <X size={20} aria-hidden="true" />
+        </button>
+        <p className="mb-4 text-xs uppercase tracking-widest text-text-secondary">UI-демо · без отправки</p>
+        <h2 id="booking-title" ref={heading} tabIndex={-1} className="text-3xl font-serif mb-4 outline-none">
+          {reviewed ? 'Демонстрационный итог' : 'Пример бронирования'}
+        </h2>
+        <p id="booking-description" className="text-sm text-text-secondary leading-relaxed mb-7">
+          Вымышленный фотограф и тестовые данные. Контакты вводить не нужно: сайт не отправляет заявки и не бронирует даты.
+        </p>
+        {!reviewed ? (
+          <form autoComplete="off" onSubmit={(event) => { event.preventDefault(); setReviewed(true); }} className="flex flex-col gap-5">
+            <div>
+              <label htmlFor="booking-name" className="block text-xs font-medium mb-2">Тестовый персонаж</label>
+              <input id="booking-name" type="text" readOnly value="Демо-пара" className="w-full border border-gray-300 px-3 py-3 bg-bg-secondary text-text-secondary" />
             </div>
-            
-            {/* Decorative bottom bar */}
-            <div className="h-1 w-full bg-gradient-to-r from-transparent via-accent to-transparent opacity-20" />
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+            <div>
+              <label htmlFor="booking-date" className="block text-xs font-medium mb-2">Пример даты · не проверка доступности</label>
+              <input id="booking-date" type="date" readOnly value="2030-06-15" className="w-full border border-gray-300 px-3 py-3 bg-bg-secondary text-text-secondary" />
+            </div>
+            <div>
+              <label htmlFor="booking-plan" className="block text-xs font-medium mb-2">Демонстрационный пакет</label>
+              <select id="booking-plan" value={plan} onChange={(event) => setPlan(event.target.value)} className="w-full border border-gray-300 px-3 py-3 bg-white">
+                {['Essential', 'Premium', 'Deluxe'].map((name) => <option key={name}>{name}</option>)}
+              </select>
+            </div>
+            <button type="submit" className="mt-3 w-full py-4 bg-text-main text-white uppercase tracking-widest text-xs font-bold hover:bg-black">Посмотреть демо-итог</button>
+          </form>
+        ) : (
+          <div>
+            <CheckCircle size={32} className="mb-4 text-text-secondary" aria-hidden="true" />
+            <p role="status" className="text-sm leading-relaxed text-text-secondary">Заявка не отправлялась. Дата не бронировалась. Обратная связь не предусмотрена.</p>
+            <dl className="my-6 border-y border-gray-200 py-4 text-sm space-y-2">
+              <div><dt className="inline font-medium">Пакет: </dt><dd className="inline">{plan}</dd></div>
+              <div><dt className="inline font-medium">Тестовая дата: </dt><dd className="inline">15 июня 2030</dd></div>
+            </dl>
+            <button type="button" onClick={() => setReviewed(false)} className="w-full py-4 border border-text-main text-xs font-semibold">Вернуться к примеру</button>
+          </div>
+        )}
+      </motion.div>
+    </dialog>
   );
-};
+}
 
-export default BookingModal;
+export default function BookingModal({ isOpen, onClose, planName }: BookingModalProps) {
+  return isOpen ? <BookingDialog onClose={onClose} planName={planName} /> : null;
+}

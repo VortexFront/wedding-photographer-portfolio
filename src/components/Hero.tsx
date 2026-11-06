@@ -23,7 +23,7 @@ const Hero = () => {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="text-white/80 uppercase tracking-[0.3em] text-[10px] md:text-sm mb-6 block font-light">
-            Профессиональный свадебный фотограф
+            UI-демо · вымышленный свадебный фотограф
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-8xl text-white mb-8 leading-tight">
             Сохраняя Ваши <br /> 
