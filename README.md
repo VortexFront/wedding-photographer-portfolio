@@ -1,74 +1,59 @@
-# React + TypeScript + Vite
+# Elena Art — демонстрационный сайт фотографа
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React/TypeScript-портфолио **вымышленного** свадебного фотографа. Проект показывает адаптивную галерею, пакеты съёмки и доступный сценарий выбора пакета. Реальные услуги, заявки и бронирования отсутствуют.
 
-Currently, two official plugins are available:
+Автор проекта и frontend-разработчик — **Максим Асатуров**; использовались AI-assisted инструменты. Фотографии принадлежат авторам Unsplash, не являются работами разработчика и не изображают его клиентов. Цифры «8 лет» и «200+ свадеб» удалены: они не подтверждают профессиональный опыт автора сайта.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Что работает
 
-## React Compiler
+- Якорная навигация, мобильное меню, галерея и три демонстрационных пакета.
+- Выбранный пакет переносится в диалог; его можно изменить и просмотреть локальный итог.
+- Имя и дата — готовые read-only примеры. Полей телефона, почты и свободного текста нет.
+- Диалог имеет связанные labels, удержание фокуса, Escape, закрытие по фону, возврат фокуса и сброс состояния при новом открытии.
+- Итог прямо сообщает: заявка не отправлялась, дата не бронировалась, обратная связь не предусмотрена. Таймеров, имитации API и логирования контактов нет.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Скриншоты
 
-## Expanding the ESLint configuration
+![Главная, 1440px](docs/screenshots/home-desktop.png)
+![Демонстрационный диалог, 390px](docs/screenshots/demo-booking-mobile.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Стек и запуск
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+React 19, TypeScript, Vite 7, Framer Motion, Lucide React. Node.js 22.12+.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm ci
+npm run dev -- --host 127.0.0.1
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Production-сборка использует существующий base `/wedding-photographer-portfolio/`:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm run build
+npm run preview -- --host 127.0.0.1
 ```
-# wedding-photographer-portfolio
+
+Локальный preview открывается по `/wedding-photographer-portfolio/`; dev-сервер — по `/`. Preview учитывает тот же base, что production-сборка.
+
+[Существующая ссылка GitHub Pages](https://vortexfront.github.io/wedding-photographer-portfolio/). Изменения этой ветки не считаются опубликованными до отдельного подтверждения владельца; ссылка может показывать прежнюю версию.
+
+## Проверки
+
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
+
+Playwright проверяет выбор пакета/честный итог, отсутствие контактных полей и исходящих изменяющих запросов, reset-on-reopen, фокус/Tab/Shift+Tab/Escape/фон, навигацию, метаданные и отсутствие document overflow на 390/768/1440px. Проверка source дополнительно исключает таймеры и симулированный API. CI выполняет сборку и проверки с `contents: read`; шагов публикации Pages нет.
+
+## Ограничения и контент
+
+- Это статическое UI-демо: нет сервера, проверки доступности, доставки сообщений, оплаты, аккаунтов или сохранения формы после перезагрузки.
+- Tailwind CDN и Google Fonts сохранены, чтобы ограничить изменения дизайна. Для первого открытия нужен интернет; автономная работа и отказ CDN не гарантируются. Миграция Tailwind в локальную сборку отложена, а не объявлена выполненной.
+- Социальные иконки ведут на главные страницы платформ, не на профили вымышленного фотографа. Контактные примеры не активируют звонок или письмо.
+- [Точные источники изображений и проверенные условия Unsplash](IMAGE_CREDITS.md). Ссылки на изображения проверены на HTTP 200; будущая доступность стороннего CDN не гарантируется. Индивидуальные model/property releases не проверялись, одобрение изображёнными людьми не подразумевается.
+- Браузерные автотесты не являются полной проверкой всех браузеров или сертификацией доступности. Ручная проверка и фактические результаты PR учитываются отдельно в общем отчёте.
+- Выполнены совместимые обновления lockfile без `--force`. Для `@typescript-eslint/typescript-estree` временно закреплён исправленный `minimatch 11.0.4`; lint/typecheck/build и audit проверяются после установки. Override следует убрать после исправления upstream и повторить проверки.

@@ -9,7 +9,12 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "typecheck": "tsc -b --pretty false",
+    "test:e2e": "playwright test"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": { "minimatch": "11.0.4" }
   },
   "dependencies": {
     "framer-motion": "^12.23.26",
@@ -19,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "1.64.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
